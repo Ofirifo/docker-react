@@ -16,6 +16,11 @@ pipeline {
                 echo 'Building the app'
             }
         }
+        stage('Deploy'){
+            steps {
+                sh "echo Deploying to ${params.ENV}"
+            }
+        }
         stage('Test') {
             steps {
                 echo 'Running Tests'
