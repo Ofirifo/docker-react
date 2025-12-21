@@ -1,10 +1,20 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:18'
+        }
+    }
     parameters {
         choice(name: 'ENV', choices: ['dev', 'staging', 'prod'], description: 'Deploy environment')
     }
 
     stages {
+        stage('Install') {
+            steps {
+                sh 'npm --version'
+                sh 'npm install'
+            }
+        }
         stage('Checkout') {
             steps {
              //   git branch: 'master', url: 'https://github.com/Ofirifo/docker-react.git'
