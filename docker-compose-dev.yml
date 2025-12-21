@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3"
 services:
   web:
     build:
@@ -14,13 +14,14 @@ services:
       - CHOKIDAR_USEPOLLING=true
       - WATCHPACK_POLLING=true
   tests:
+    stdin_open: true
     build:
       context: .
       dockerfile: Dockerfile.dev
     volumes:
       - /app/node_modules
       - .:/app
-    command: npm test
+    command: ["npm", "run", "test"]
     environment:
       - CHOKIDAR_USEPOLLING=true
       - WATCHPACK_POLLING=true
