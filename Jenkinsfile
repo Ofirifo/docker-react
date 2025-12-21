@@ -13,6 +13,7 @@ pipeline {
         }
         stage('Build') {
             steps {
+                sh 'npm install && npm run build'
                 echo 'Building the app'
             }
         }
@@ -26,7 +27,9 @@ pipeline {
                 expression { params.ENV == 'prod' }
             }
             steps {
-                input message: 'Deploy to PRODUCTION?', ok: 'Deploy'
+                timeout(time: 30, unit: 'MINUTES') {
+                    input message: 'Deploy to PRODUCTION?', ok: 'Deploy'
+                }
             }
         }
         stage('Test') {
