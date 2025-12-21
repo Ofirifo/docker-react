@@ -21,10 +21,30 @@ pipeline {
                 sh "echo Deploying to ${params.ENV}"
             }
         }
+        stage('Approve Production') {
+            when {
+                expression { params.ENV == 'prod' }
+            }
+            steps {
+                input message: 'Deploy to PRODUCTION?', ok: 'Deploy'
+            }
+        }
         stage('Test') {
             steps {
                 echo 'Running Tests'
             }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Build succeeded'
+        }
+        failure {
+            echo 'Build failed'
+        }
+        always {
+            cleanWs()
         }
     }
 }
