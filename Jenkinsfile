@@ -4,7 +4,7 @@ pipeline {
         stage('Checkout') {
             steps {
              //   git branch: 'master', url: 'https://github.com/Ofirifo/docker-react.git'
-                Checkout scm
+                checkout scm
             }
         }
         stage('Build') {
